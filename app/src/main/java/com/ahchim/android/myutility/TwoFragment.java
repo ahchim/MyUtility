@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,7 +25,8 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
     View view = null;
 
     Button btnLength, btnArea, btnWeight, btnVolume;
-    LinearLayout layoutResult;
+    LinearLayout defaultLinear, afterLinear, resultLinear;
+    ImageView imageArrow;
     Spinner spnDefaultUnit, spnAfterUnit;
     ArrayList<String> units;
     ArrayAdapter<String> adaptDefault;
@@ -48,7 +50,10 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
             btnWeight = (Button) view.findViewById(R.id.btnWeight);
             btnVolume = (Button) view.findViewById(R.id.btnVolume);
 
-            layoutResult = (LinearLayout) view.findViewById(R.id.layoutResult);
+            defaultLinear = (LinearLayout) view.findViewById(R.id.defaultLinear);
+            imageArrow = (ImageView) view.findViewById(R.id.imageArrow);
+            afterLinear = (LinearLayout) view.findViewById(R.id.afterLinear);
+            resultLinear = (LinearLayout) view.findViewById(R.id.resultLinear);
 
             btnLength.setOnClickListener(this);
             btnArea.setOnClickListener(this);
@@ -114,8 +119,15 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
         spnAfterUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id){
-                Toast.makeText(getContext(), "선택된 아이템 = " + units.get(position), Toast.LENGTH_SHORT).show();
+                String sel = units.get(position);
 
+                Toast.makeText(getContext(), "선택된 아이템 = " + sel, Toast.LENGTH_SHORT).show();
+
+                for(int i=0; i<units.size(); i++){
+                    if (sel.equals(units.get(i))) {
+
+                    }  // TODO textWatcher 쓰기
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView){
