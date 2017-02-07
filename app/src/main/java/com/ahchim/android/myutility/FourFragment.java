@@ -73,19 +73,16 @@ public class FourFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(view != null){
-            return view;
-        } else {
-            // Inflate the layout for this fragment
-            view = inflater.inflate(R.layout.fragment_four, container, false);
 
-            // findViewById가 아니라 ㅠㅠㅠ 굉장히 복잡함.
-            // Fragment 에서 mapView를 호출하는 방법
-            mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
-            mapFragment.getMapAsync(this);
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_four, container, false);
 
-            return view;
-        }
+        // findViewById가 아니라 ㅠㅠㅠ 굉장히 복잡함.
+        // Fragment 에서 mapView를 호출하는 방법
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
+        mapFragment.getMapAsync(this);
+
+        return view;
     }
 
     @Override
