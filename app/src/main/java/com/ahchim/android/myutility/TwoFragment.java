@@ -3,12 +3,15 @@ package com.ahchim.android.myutility;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -24,7 +27,11 @@ import java.util.Arrays;
 public class TwoFragment extends Fragment implements View.OnClickListener {
     View view = null;
 
-    Button btnLength, btnArea, btnWeight, btnVolume;
+    Button btnLength;
+    Button btnArea;
+    Button btnWeight;
+    Button btnVolume;
+
     LinearLayout defaultLinear, afterLinear, resultLinear;
     ImageView imageArrow;
     Spinner spnDefaultUnit, spnAfterUnit;
@@ -86,6 +93,23 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // TODO : 여기다 바뀔내용 담기
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
     public void spinnerRun(String s){
         // 3.pre 스피너에 들어갈 데이터를 정의
         units = new ArrayList<>(Arrays.asList(s.split("#")));
@@ -107,8 +131,14 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
         spnDefaultUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id){
-                Toast.makeText(getContext(), "선택된 아이템 = " + units.get(position), Toast.LENGTH_SHORT).show();
+                String sel = units.get(position);
+                Toast.makeText(getContext(), "선택된 아이템 = " + sel, Toast.LENGTH_SHORT).show();
 
+                for(int i=0; i<units.size(); i++){
+                    if (sel.equals(units.get(i))) {
+                        // TODO textWatcher 쓰기
+                    }
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView){
@@ -119,15 +149,7 @@ public class TwoFragment extends Fragment implements View.OnClickListener {
         spnAfterUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id){
-                String sel = units.get(position);
-
-                Toast.makeText(getContext(), "선택된 아이템 = " + sel, Toast.LENGTH_SHORT).show();
-
-                for(int i=0; i<units.size(); i++){
-                    if (sel.equals(units.get(i))) {
-
-                    }  // TODO textWatcher 쓰기
-                }
+                Toast.makeText(getContext(), "선택된 아이템 = " + units.get(position), Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView){
