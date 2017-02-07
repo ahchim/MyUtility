@@ -9,7 +9,10 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
+    <!-- GPS 센서 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Network Provider - GPS가 켜져있지 않을 때 대략적인 위치정보를.. 그래서 FINE/COARSE -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
