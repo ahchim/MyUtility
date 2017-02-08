@@ -27,6 +27,7 @@ public class ThreeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // 일종의 View holder 형태로 처리 : 성능이 개선될 여지가 많다.
         if(view != null){
             return view;
         } else {
@@ -59,5 +60,14 @@ public class ThreeFragment extends Fragment {
 
             return view;
         }
+    }
+
+    public boolean goBack() {
+//        webView.goBack();
+//        return webView.canGoBack();
+        if(webView.canGoBack()){
+            webView.goBack();
+            return true;
+        }else return false;
     }
 }
