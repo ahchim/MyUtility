@@ -1,6 +1,5 @@
 package com.ahchim.android.myutility;
 
-import android.*;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -22,7 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import java.util.Stack;
+import com.ahchim.android.myutility.dummy.DummyContent;
 
 /*
  * GPS 센서 사용하기
@@ -36,12 +35,13 @@ import java.util.Stack;
  * 7. Listener 해제
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FiveFragment.OnListFragmentInteractionListener {
 
     // 탭 및 페이저 속성 정의
-    final int TAB_COUNT = 4;
+    final int TAB_COUNT = 5;
     // 현재 페이지
     int page_position = 0;
+    // 페이지 이동경로를 저장하는 history stack 변수 - 커스텀 스택 클래스
     Stack<Integer> pageStack = new Stack<>();
     boolean backPress = false;
 
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private TwoFragment two;
     private ThreeFragment three;
     private FourFragment four;
+    private FiveFragment five;
 
     ViewPager viewPager;
 
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         two = new TwoFragment();
         three = new ThreeFragment();
         four = new FourFragment();
+        five = FiveFragment.newInstance(3);  // 미리 정해진 그리드 가로축 개수
         //four.setActivity(this);
 
         // 탭 Layout 정의
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("단위환산"));
         tabLayout.addTab(tabLayout.newTab().setText("검색엔진"));
         tabLayout.addTab(tabLayout.newTab().setText("내위치"));
+        tabLayout.addTab(tabLayout.newTab().setText("앨범"));
 
         // 프래그먼트 페이저 작성
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -209,6 +212,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
     class PagerAdapter extends FragmentStatePagerAdapter {
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -222,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1: fragment = two; break;
                 case 2: fragment = three; break;
                 case 3: fragment = four; break;
+                case 4: fragment = five; break;
             }
             return fragment;
         }
@@ -240,9 +249,11 @@ public class MainActivity extends AppCompatActivity {
     private void checkPermission(){
         // 1.1 런타임 권한체크
         if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+           || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+           || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             // 1.2 요청할 권한 목록 작성
-            String permArr[] = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+            String permArr[] = {Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
             // 1.3 시스템에 권한 요청
             requestPermissions(permArr, REQ_CODE);
         } else{
@@ -256,7 +267,8 @@ public class MainActivity extends AppCompatActivity {
         // 2.1 배열에 넘긴 런타임권한을 체크해서 승인이 되면
         if(requestCode == REQ_CODE){
             if(grantResult[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResult[1] == PackageManager.PERMISSION_GRANTED){
+               grantResult[1] == PackageManager.PERMISSION_GRANTED &&
+               grantResult[2] == PackageManager.PERMISSION_GRANTED){
                 // 2.2 프로그램 실행
                 init();
             } else{

@@ -3,7 +3,7 @@
     package="com.ahchim.android.myutility">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -12,7 +12,7 @@
     <!-- GPS 센서 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Network Provider - GPS가 켜져있지 않을 때 대략적인 위치정보를.. 그래서 FINE/COARSE -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -21,8 +21,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-                  android:configChanges="orientation|screenSize">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +44,9 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".CameraActivity"></activity>
+        <activity android:name=".DetailActivity"></activity>
     </application>
 
 </manifest>
